@@ -103,12 +103,14 @@ async def handler():
         elif msg.text.lower() == 'получить список задач за предыдущий месяц 📊':
 
             str_prettify = await get_jira_task('every_month')
-            await msg.answer(str_prettify, parse_mode=types.ParseMode.HTML)
+            for i in str_prettify.split('        '):
+                await msg.answer(i, parse_mode=types.ParseMode.HTML)
 
         elif msg.text.lower() == 'получить список задач за последние 5 дней 📊':
 
             str_prettify = await get_jira_task('every_week')
-            await msg.answer(str_prettify, parse_mode=types.ParseMode.HTML)
+            for i in str_prettify.split('        '):
+                await msg.answer(i, parse_mode=types.ParseMode.HTML)
 
         else:
             await msg.answer('Не понимаю, что это значит.')

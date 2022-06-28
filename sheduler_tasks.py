@@ -18,9 +18,13 @@ async def task_check_backup_local():
                 message += f'   🔴 {i}: {data.get(i)} \n'
     if not check:
         message += f'   🟢 Ошибок не обнаружено! ✅'
-    cursor.execute("SELECT chat_id from users  WHERE role <> 'orl'")
+    cursor.execute("SELECT chat_id from users  WHERE role <> 'orl' and active = 1")
     for i in cursor.fetchall():
-        await bot.send_message(i[0], message, parse_mode=types.ParseMode.HTML)
+        try:
+            await bot.send_message(i[0], message, parse_mode=types.ParseMode.HTML)
+        except Exception as ex:
+            print(i[0])
+            print(ex)
 
 
 async def task_check_backup_ya_disk():
@@ -36,7 +40,7 @@ async def task_check_backup_ya_disk():
                 message += f'   🔴 {i}: {data.get(i)} \n'
     if not check:
         message += f'   🟢 Ошибок не обнаружено! ✅'
-    cursor.execute("SELECT chat_id from users  WHERE role <> 'orl'")
+    cursor.execute("SELECT chat_id from users  WHERE role <> 'orl' and active = 1")
     for i in cursor.fetchall():
         await bot.send_message(i[0], message, parse_mode=types.ParseMode.HTML)
 
@@ -50,6 +54,7 @@ async def clear_history_chat():
 async def task_get_jira(mode):
 
     str_prettify = await get_jira_task(mode)
-    cursor.execute("SELECT chat_id from users")
+    cursor.execute("SELECT chat_id from users WHERE active = 1")
     for i in cursor.fetchall():
-        await bot.send_message(i[0], str_prettify, parse_mode=types.ParseMode.HTML)
+        for j in str_prettify.split('        '):
+            await bot.send_message(i[0], j, parse_mode=types.ParseMode.HTML)

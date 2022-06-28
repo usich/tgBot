@@ -104,9 +104,9 @@ async def check_backup_yadisk(sheduler=False):
 
 async def get_jira_task(mode=''):
     jira = Jira(
-        url=jira_conf.get('jira_url'),
-        username=jira_conf.get('jira_username'),
-        password=jira_conf.get('jira_token')
+        url=jira_conf['jira_url'],
+        username=jira_conf['jira_username'],
+        password=jira_conf['jira_token']
     )
     jql_request = ''
     if mode == 'every_week':
@@ -118,9 +118,11 @@ async def get_jira_task(mode=''):
 
         jql_request = f'resolved >= {year}-{past_month}-01 AND resolved <= {year}-{past_month}-{last_day_month[1]} ' \
                       f'AND status = Выполнено ORDER BY created DESC'
+        print(jql_request)
 
-    issues = jira.jql(jql_request)
-
+    issues = jira.jql(jql_request, limit=500)
+    # print(len(issues.get('issues')))
+    # print(issues)
     data = {}
     data_err = ''
     for i in issues.get('issues'):
@@ -139,7 +141,7 @@ async def get_jira_task(mode=''):
     else:
         str_prettify = f"📊  <b>Выполненные работы за последние 5 дней:</b> \n\n"
     for employee in data:
-        str_prettify = str_prettify + f"        🚹<b>{employee}:</b> \n"
+        str_prettify = str_prettify + f"        🚹<b>{employee}:</b> \n\n"
         for task_time in data.get(employee):
             str_prettify = str_prettify + f'❇️{task_time} \n'
         str_prettify = str_prettify + '\n\n'
