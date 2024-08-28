@@ -64,9 +64,9 @@ list_folder_in_yadisk = {
     'Феодосия': 'БЭКАПЫ/феодосия',
     'Юмашева': 'БЭКАПЫ/юмашева',
     'intmag': 'БЭКАПЫ/ИнтернетМагазин',
-    'newbase': 'БЭКАПЫ/основная',
+    'newbase': 'Основная',
     'bun': 'БЭКАПЫ/буха',
     'bitrix-zoo': 'БЭКАПЫ/zoo-club',
-    'bitrix-vet': 'БЭКАПЫ/vet-club',
-    'bitrix-365': 'БЭКАПЫ/korm-365'
+    # 'bitrix-vet': 'БЭКАПЫ/vet-club',
+    # 'bitrix-365': 'БЭКАПЫ/korm-365'
  }

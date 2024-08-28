@@ -6,7 +6,7 @@ import aiohttp
 import yadisk
 from atlassian import Jira
 
-from config import auth_ya_disk, jira_conf
+from config import auth_ya_disk, jira_conf, auth_ya_disk_two_acc
 from ip_list import list_folder_in_yadisk
 
 
@@ -38,7 +38,7 @@ async def check_backup_yadisk(sheduler=False):
         try:
             headers = {
                 'Accept': 'application/json',
-                'Authorization': auth_ya_disk,
+                'Authorization': auth_ya_disk_two_acc if i == 'newbase' else auth_ya_disk,
             }
 
             params = (
