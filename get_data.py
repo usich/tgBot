@@ -40,16 +40,17 @@ async def check_backup_yadisk(sheduler=False):
                 'Accept': 'application/json',
                 'Authorization': auth_ya_disk_two_acc if i == 'newbase' else auth_ya_disk,
             }
-
             params = (
                 ('path', list_folder_in_yadisk.get(i)),
                 ('preview_crop', 'false'),
-                ('limit', '100'),
+                ('limit', '150'),
             )
             async with aiohttp.ClientSession() as Session:
                 async with Session.get('https://cloud-api.yandex.net/v1/disk/resources', headers=headers,
                                        params=params) as resp:
                     response = await resp.json()
+            # if i == 'newbase':
+            #     asd = 2
             if len(response.get('_embedded').get('items')) == 0:
                 data[i] = 'Папка пуста'
             else:
