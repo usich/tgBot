@@ -36,6 +36,7 @@ async def check_backup_yadisk(sheduler=False):
     date_now = datetime.datetime.now().strftime('%Y-%m-%d')
     for i in list_folder_in_yadisk:
         try:
+
             headers = {
                 'Accept': 'application/json',
                 'Authorization': auth_ya_disk_two_acc if i == 'newbase' else auth_ya_disk,
@@ -49,8 +50,6 @@ async def check_backup_yadisk(sheduler=False):
                 async with Session.get('https://cloud-api.yandex.net/v1/disk/resources', headers=headers,
                                        params=params) as resp:
                     response = await resp.json()
-            # if i == 'newbase':
-            #     asd = 2
             if len(response.get('_embedded').get('items')) == 0:
                 data[i] = 'Папка пуста'
             else:
